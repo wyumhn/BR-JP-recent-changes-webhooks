@@ -15,7 +15,7 @@ export default {
         const DISCORD_WEBHOOK_URL = env.DISCORD_WEBHOOK_URL;
         try {
             // 前回の取得内容を読み込む
-            const oldHistoryRaw = await env.HISTORY_KV.get("previous_urls");
+            const oldHistoryRaw = await env.BR_JP_HISTORY.get("previous_urls");
             let oldHistory = oldHistoryRaw ? JSON.parse(oldHistoryRaw) : [];
 
             // RSSフィードを取得
@@ -48,8 +48,8 @@ export default {
 
                     // Discordに送信するメッセージを作成
                     const message = {
-                        // content: `> **下書きが批評開始になりました！**\n> **タイトル:** ${item.title}\n> **著者:** ${extractedAuthor}\n> **リンク:** ${item.link}`
-                        content: `${item.title} by ${extractedAuthor} > ${item.link}`
+                        content: `> **下書きが批評開始になりました！**\n> **タイトル:** ${item.title}\n> **著者:** ${extractedAuthor}\n> **リンク:** ${item.link}`
+                        // content: `${item.title} by ${extractedAuthor} > ${item.link}`
                     };
 
                     // WebhookへPOST送信
@@ -66,7 +66,7 @@ export default {
             }
 
             const currentUrls = items.map(item => item.link);
-            await env.HISTORY_KV.put("previous_urls", JSON.stringify(currentUrls));
+            await env.BR_JP_HISTORY.put("previous_urls", JSON.stringify(currentUrls));
             console.log("Success: Checked and updated RSS.");
 
         } catch (error) {
