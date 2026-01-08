@@ -5,7 +5,6 @@ const RSS_URL = 'http://japan-backrooms-sandbox.wikidot.com/feed/pages/pagename/
 
 export default {
 
-    // デバッグ時に呼び出されるハンドラ
     async fetch(request, env, ctx) {
         await this.scheduled(null, env, ctx);
         return new Response("Cron 処理を手動実行しました。Discord を確認してください。");
@@ -13,7 +12,6 @@ export default {
 
     // Cron Trigger から呼び出されるハンドラ
     async scheduled(event, env, ctx) {
-        // env.HISTORY_KV は Cloudflare ダッシュボード等で設定する KV バインディング
         const DISCORD_WEBHOOK_URL = env.DISCORD_WEBHOOK_URL;
         try {
             // 前回の取得内容を読み込む
@@ -74,5 +72,5 @@ export default {
         } catch (error) {
             console.error('エラーが発生しました:', error);
         }
-    },
+    }
 };
